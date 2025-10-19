@@ -10,12 +10,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Add your models here
-// Example:
-// model User {
-//   id        String   @id @default(cuid())
-//   email     String   @unique
-//   name      String?
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
+model Employee {
+  id        String     @id @default(cuid())
+  name      String
+  email     String     @unique
+  position  String
+  department String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  payslips  Payslip[]
+}
+
+model Payslip {
+  id              String   @id @default(cuid())
+  employeeId      String
+  employee        Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  payPeriodStart  DateTime
+  payPeriodEnd    DateTime
+  payDate         DateTime
+
+  // Earnings
+  basicSalary     Float
+  houseAllowance  Float    @default(0)
+  transportAllowance Float @default(0)
+  otherEarnings   Float    @default(0)
+
+  // Deductions
+  tax             Float    @default(0)
+  insurance       Float    @default(0)
+  pension         Float    @default(0)
+  otherDeductions Float    @default(0)
+
+  // Calculated fields
+  totalEarnings   Float
+  totalDeductions Float
+  netPay          Float
+
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([employeeId])
+  @@index([payDate])
+}
