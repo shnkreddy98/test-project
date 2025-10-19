@@ -59,7 +59,7 @@ export default function Home() {
             </div>
             <Button
               onClick={() => setShowEmployeeForm(!showEmployeeForm)}
-              variant="outline"
+              className="bg-red-600 hover:bg-red-700 text-white"
             >
               {showEmployeeForm ? 'Hide' : 'Add'} Employee
             </Button>
@@ -137,7 +137,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <Button type="submit">Add Employee</Button>
+                <Button type="submit" className="bg-red-600 hover:bg-red-700 text-white">Add Employee</Button>
               </form>
             </CardContent>
           </Card>
